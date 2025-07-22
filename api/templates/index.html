@@ -4,13 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>bBINl's CC XEN API</title>
-  <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
+    /* Custom CSS - simplified version of your original styles */
     :root {
       --primary-color: #00C4B4;
       --secondary-color: #F0B90B;
@@ -24,6 +22,9 @@
       background-size: 400% 400%;
       animation: gradient 15s ease infinite;
       color: var(--dark-color);
+      min-height: 100vh; /* Ensure body takes full height */
+      display: flex;
+      flex-direction: column;
     }
     
     @keyframes gradient {
@@ -44,19 +45,16 @@
       margin-right: 10px;
     }
     
-    .nav-link:hover {
-      background: rgba(0, 196, 180, 0.1);
-      color: var(--primary-color) !important;
-    }
-    
     .hero {
       background: #fff;
       padding: 4rem 0;
       border-radius: 16px;
-      margin: 1.5rem 0;
+      margin: 1.5rem auto; /* Center hero */
       box-shadow: 0 4px 12px rgba(0,0,0,0.08);
       text-align: center;
       background: linear-gradient(135deg, rgba(240,185,11,0.05) 0%, rgba(0,196,180,0.05) 100%);
+      max-width: 900px; /* Constrain hero width */
+      width: 90%; /* Responsive width */
     }
     
     .status-indicator {
@@ -64,52 +62,12 @@
       height: 12px;
       border-radius: 50%;
       display: inline-block;
+      vertical-align: middle;
+      margin-right: 5px;
     }
     
     .status-online { background-color: #28a745; }
     .status-offline { background-color: #dc3545; }
-    
-    pre {
-      background: #f8f9fa;
-      border: 1px solid #ddd;
-      padding: 1rem;
-      border-radius: 12px;
-      font-family: 'Courier New', monospace;
-    }
-    
-    .docs-section {
-      background: #ffffff;
-      padding: 2.5rem;
-      border-radius: 16px;
-      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
-      margin-bottom: 2rem;
-      border: 1px solid rgba(0,0,0,0.05);
-    }
-    
-    .docs-section h3 {
-      font-weight: 600;
-      background: var(--secondary-color);
-      color: #ffffff;
-      padding: 1rem;
-      border-radius: 8px;
-      margin-bottom: 1.5rem;
-    }
-    
-    .docs-section pre {
-      background: #f1f3f5;
-      padding: 1.5rem;
-      border-radius: 12px;
-      font-size: 0.9rem;
-      border: 1px solid #e0e0e0;
-      overflow-x: auto;
-    }
-    
-    .docs-section .docs-content {
-      background: #f8f9fa;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
-    }
     
     .api-container {
       background: white;
@@ -118,38 +76,53 @@
       margin-bottom: 2rem;
       box-shadow: 0 4px 12px rgba(0,0,0,0.05);
       border: 1px solid rgba(0,0,0,0.05);
+      max-width: 900px; /* Constrain container width */
+      width: 90%; /* Responsive width */
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .docs-section {
+      background: #ffffff;
+      padding: 2.5rem;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+      margin-bottom: 2rem;
+      border: 1px solid rgba(0,0,0,0.05);
+      max-width: 900px; /* Constrain container width */
+      width: 90%; /* Responsive width */
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .docs-section h3 {
+      font-weight: 600;
+      background: var(--secondary-color);
+      color: #ffffff;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+    }
+
+    .docs-section .docs-content {
+      background: #f8f9fa;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+      margin-bottom: 1.5rem; /* Spacing between docs content blocks */
     }
     
-    .btn-primary {
-      background-color: var(--primary-color);
-      border-color: var(--primary-color);
+    pre {
+      background: #f1f3f5;
+      padding: 1rem;
+      border-radius: 12px;
+      font-family: 'Courier New', monospace;
+      white-space: pre-wrap; /* Ensures long lines wrap */
+      word-break: break-all; /* Breaks words if necessary */
+      border: 1px solid #e0e0e0;
+      overflow-x: auto; /* For horizontal scrolling if content is too wide */
     }
-    
-    .btn-primary:hover {
-      background-color: #00a396;
-      border-color: #00a396;
-    }
-    
-    .btn-outline-primary {
-      color: var(--primary-color);
-      border-color: var(--primary-color);
-    }
-    
-    .btn-outline-primary:hover {
-      background-color: var(--primary-color);
-      border-color: var(--primary-color);
-    }
-    
-    .btn-success {
-      background-color: var(--secondary-color);
-      border-color: var(--secondary-color);
-    }
-    
-    .btn-success:hover {
-      background-color: #d9a70b;
-      border-color: #d9a70b;
-    }
-    
+
     .bin-result {
       background: #f8f9fa;
       border-radius: 12px;
@@ -157,39 +130,69 @@
       font-family: 'Courier New', monospace;
       white-space: pre-wrap;
       border: 1px solid #e9ecef;
+      text-align: left; /* Ensure text is left-aligned */
     }
-    
+
     .card-result {
       position: relative;
     }
-    
+
     .copy-btn {
       position: absolute;
       top: 10px;
       right: 10px;
       z-index: 10;
     }
-    
+
     .highlight {
       background-color: rgba(240, 185, 11, 0.2);
       padding: 2px 4px;
       border-radius: 4px;
     }
+
+    /* New CSS for bolding the generated cards and BIN info output */
+    .bold-output b {
+        font-weight: bold;
+    }
+
+    /* Footer styling */
+    footer {
+        background: #fff;
+        padding: 1.5rem 0;
+        box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
+        margin-top: auto; /* Push footer to the bottom */
+        border-top: 1px solid #e0e0e0;
+    }
+    footer p {
+        margin-bottom: 0.5rem;
+        color: #555;
+    }
+    footer a {
+        color: var(--primary-color);
+        text-decoration: none;
+    }
+    footer a:hover {
+        text-decoration: underline;
+    }
     
+    /* Responsive adjustments */
     @media (max-width: 768px) {
-      .hero {
-        padding: 2rem 0;
+      .hero, .api-container, .docs-section {
+        padding: 2rem 1rem;
+        margin: 1rem auto;
       }
-      
-      .docs-section {
-        padding: 1.5rem;
+      .docs-section .docs-content {
+          padding: 1.5rem;
+      }
+      .copy-btn {
+        position: static; /* Make copy button inline on smaller screens */
+        margin-top: 10px;
       }
     }
   </style>
 </head>
 <body>
 
-<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light">
   <div class="container">
     <a class="navbar-brand fw-bold" href="#">
@@ -199,7 +202,6 @@
   </div>
 </nav>
 
-<!-- Hero Section -->
 <section class="hero">
   <div class="container">
     <h1 class="mb-3">bBINl's Xtrem CC GEN API</h1>
@@ -211,7 +213,6 @@
   </div>
 </section>
 
-<!-- API Generator -->
 <div class="container">
   <div class="api-container">
     <h2 class="mb-4 text-center">Generate Cards</h2>
@@ -243,12 +244,11 @@
           <i class="fas fa-copy"></i> Copy Cards
         </button>
       </div>
-      <pre id="apiResultContent" style="max-height: 400px; overflow-y: auto;"></pre>
+      <pre id="apiResultContent" class="bold-output" style="max-height: 400px; overflow-y: auto;"></pre>
     </div>
   </div>
 </div>
 
-<!-- BIN Info Lookup -->
 <div class="container">
   <div class="api-container">
     <h2 class="mb-4 text-center">BIN Info Lookup</h2>
@@ -262,11 +262,10 @@
         </button>
       </div>
     </form>
-    <div id="binResultBox" class="bin-result"></div>
+    <div id="binResultBox" class="bin-result bold-output"></div>
   </div>
 </div>
 
-<!-- Documentation Section -->
 <div class="container">
   <div class="docs-section">
     <h2 class="mb-4 text-center" style="font-weight: 600; color: var(--dark-color);">API Documentation</h2>
@@ -412,7 +411,6 @@
   </div>
 </div>
 
-<!-- Footer -->
 <footer class="text-center py-4 bg-white border-top">
   <div class="container">
     <p class="mb-1">Crafted with ❤️ by <a href="https://t.me/ISmartCoder" target="_blank">@ISmartCoder</a></p>
@@ -421,7 +419,6 @@
   </div>
 </footer>
 
-<!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
@@ -462,7 +459,7 @@ document.getElementById('apiTestForm').addEventListener('submit', async function
   try {
     const res = await fetch(url);
     const data = await res.json();
-    document.getElementById('apiResultContent').textContent = formatGeneratedCards(data);
+    document.getElementById('apiResultContent').innerHTML = formatGeneratedCards(data); // Changed to innerHTML
   } catch (err) {
     document.getElementById('apiResultContent').textContent = 'Error fetching API response: ' + err.message;
   }
@@ -470,13 +467,12 @@ document.getElementById('apiTestForm').addEventListener('submit', async function
 
 function formatGeneratedCards(data) {
   if (!data || !data.cards) return 'No cards generated.';
-  
-  // Only include the card numbers and details (skip BIN info)
-  return data.cards.map(c => `${c.number}|${c.expiry}|${c.cvv}`).join('\n');
+  // Wrap parts of the output in <b> tags for bolding
+  return data.cards.map(c => `<b>${c.number}</b>|<b>${c.expiry}</b>|<b>${c.cvv}</b>`).join('\n');
 }
 
 function copyCards() {
-  const text = document.getElementById("apiResultContent").textContent;
+  const text = document.getElementById("apiResultContent").innerText; // Use innerText to get plain text without HTML
   navigator.clipboard.writeText(text).then(() => {
     Swal.fire({
       position: 'top-end',
@@ -513,7 +509,7 @@ document.getElementById('binLookupForm').addEventListener('submit', async functi
       throw new Error(await res.text());
     }
     const data = await res.json();
-    document.getElementById('binResultBox').textContent = formatBinInfo(data);
+    document.getElementById('binResultBox').innerHTML = formatBinInfo(data); // Changed to innerHTML
   } catch (err) {
     document.getElementById('binResultBox').textContent = 'Error: ' + err.message;
     Swal.fire({
@@ -525,18 +521,19 @@ document.getElementById('binLookupForm').addEventListener('submit', async functi
 });
 
 function formatBinInfo(data) {
+  // Bold specific parts of the BIN info output
   return `•──────────────────────•
-BIN: ${data.bin}
-SCHEME: ${data.scheme}
-TYPE: ${data.type}
-TIER: ${data.tier}
-PREPAID: ${data.prepaid || 'N/A'}
-BANK: ${data.bank}
-COUNTRY: ${data.country} (${data.country_code}) ${data.flag}
-CURRENCY: ${data.currency}
+BIN: <b>${data.bin}</b>
+SCHEME: <b>${data.scheme}</b>
+TYPE: <b>${data.type}</b>
+TIER: <b>${data.tier}</b>
+PREPAID: <b>${data.prepaid || 'N/A'}</b>
+BANK: <b>${data.bank}</b>
+COUNTRY: <b>${data.country} (${data.country_code}) ${data.flag}</b>
+CURRENCY: <b>${data.currency}</b>
 •──────────────────────•
 
-Join: https://t.me/bro_bin_lagbe`;
+Join: <b>https://t.me/bro_bin_lagbe</b>`;
 }
 </script>
 </body>
