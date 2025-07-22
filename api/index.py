@@ -400,7 +400,7 @@ def generate_view():
     response.headers['Content-Type'] = "text/plain; charset=utf-8"
     return response
 
-@app.route("/bin/[bin]", methods=["GET"])
+@app.route("/bin/<bin>", methods=["GET"])
 def bin_lookup(bin):
     bin_info = get_bin_info(bin)
     if not bin_info:
