@@ -245,7 +245,7 @@ def root():
         "endpoints": {
             "/generate?bin=[bin]&limit=[ammount]&month=[MM]&year=[YY]&cvv=[cvv]": "Generate CCs (JSON)",
             "/generate/view?bin=[bin]&limit=[ammount]&month=[MM]&year=[YY]&cvv=[cvv]": "Download CCs as file",
-            "/bin/<bin>": "Get BIN info"
+            "/bin/[6 digit bin]": "Get BIN info"
         }
     })
 
