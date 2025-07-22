@@ -176,31 +176,6 @@
       border-radius: 4px;
     }
     
-    /* New styles for card formatting */
-    .card-number {
-      font-weight: bold;
-      color: #2c3e50;
-    }
-    
-    .bin-info {
-      background: #f8f9fa;
-      border-radius: 12px;
-      padding: 1.5rem;
-      font-family: 'Courier New', monospace;
-      white-space: pre-wrap;
-      border: 1px solid #e9ecef;
-      margin-bottom: 1rem;
-    }
-    
-    .bin-info-line {
-      margin-bottom: 0.5rem;
-    }
-    
-    .flag-emoji {
-      font-size: 1.2em;
-      margin-right: 5px;
-    }
-    
     @media (max-width: 768px) {
       .hero {
         padding: 2rem 0;
@@ -268,7 +243,7 @@
           <i class="fas fa-copy"></i> Copy Cards
         </button>
       </div>
-      <div id="apiResultContent" style="max-height: 400px; overflow-y: auto;"></div>
+      <pre id="apiResultContent" style="max-height: 400px; overflow-y: auto;"></pre>
     </div>
   </div>
 </div>
@@ -287,7 +262,7 @@
         </button>
       </div>
     </form>
-    <div id="binResultBox"></div>
+    <div id="binResultBox" class="bin-result"></div>
   </div>
 </div>
 
@@ -450,16 +425,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-// Country code to flag emoji mapping
-const countryToFlag = (countryCode) => {
-  if (!countryCode) return '';
-  const codePoints = countryCode
-    .toUpperCase()
-    .split('')
-    .map(char => 127397 + char.charCodeAt());
-  return String.fromCodePoint(...codePoints);
-};
-
 async function checkApiStatus() {
   const statusIndicator = document.getElementById('status-indicator');
   const statusText = document.getElementById('api-status');
@@ -497,43 +462,22 @@ document.getElementById('apiTestForm').addEventListener('submit', async function
   try {
     const res = await fetch(url);
     const data = await res.json();
-    document.getElementById('apiResultContent').innerHTML = formatGeneratedCards(data);
+    document.getElementById('apiResultContent').textContent = formatGeneratedCards(data);
   } catch (err) {
-    document.getElementById('apiResultContent').innerHTML = 'Error fetching API response: ' + err.message;
+    document.getElementById('apiResultContent').textContent = 'Error fetching API response: ' + err.message;
   }
 });
 
 function formatGeneratedCards(data) {
   if (!data || !data.cards) return 'No cards generated.';
-
-  // Format BIN info section
-  const binInfo = data.bin_info;
-  const binInfoHtml = `
-    <div class="bin-info">
-      <div class="bin-info-line"><strong>BIN:</strong> ${binInfo.bin}</div>
-      <div class="bin-info-line"><strong>SCHEME:</strong> ${binInfo.scheme}</div>
-      <div class="bin-info-line"><strong>TYPE:</strong> ${binInfo.type}</div>
-      <div class="bin-info-line"><strong>BANK:</strong> ${binInfo.bank}</div>
-      <div class="bin-info-line"><strong>COUNTRY:</strong> 
-        <span class="flag-emoji">${countryToFlag(binInfo.country_code)}</span>
-        ${binInfo.country} (${binInfo.country_code})
-      </div>
-      <div class="bin-info-line"><strong>CURRENCY:</strong> ${binInfo.currency}</div>
-    </div>
-    <pre>${data.cards.map(c => `<span class="card-number">${c.number}</span>|${c.expiry}|${c.cvv}`).join('\n')}</pre>
-  `;
-
-  return binInfoHtml;
+  
+  // Only include the card numbers and details (skip BIN info)
+  return data.cards.map(c => `${c.number}|${c.expiry}|${c.cvv}`).join('\n');
 }
 
 function copyCards() {
-  const content = document.getElementById("apiResultContent");
-  // Extract only the card numbers (text content of .card-number elements)
-  const cardNumbers = Array.from(content.querySelectorAll('.card-number'))
-    .map(el => el.textContent)
-    .join('\n');
-  
-  navigator.clipboard.writeText(cardNumbers).then(() => {
+  const text = document.getElementById("apiResultContent").textContent;
+  navigator.clipboard.writeText(text).then(() => {
     Swal.fire({
       position: 'top-end',
       icon: 'success',
@@ -569,9 +513,9 @@ document.getElementById('binLookupForm').addEventListener('submit', async functi
       throw new Error(await res.text());
     }
     const data = await res.json();
-    document.getElementById('binResultBox').innerHTML = formatBinInfo(data);
+    document.getElementById('binResultBox').textContent = formatBinInfo(data);
   } catch (err) {
-    document.getElementById('binResultBox').innerHTML = 'Error: ' + err.message;
+    document.getElementById('binResultBox').textContent = 'Error: ' + err.message;
     Swal.fire({
       icon: 'error',
       title: 'Lookup Failed',
@@ -581,22 +525,18 @@ document.getElementById('binLookupForm').addEventListener('submit', async functi
 });
 
 function formatBinInfo(data) {
-  return `
-    <div class="bin-info">
-      <div class="bin-info-line"><strong>BIN:</strong> ${data.bin}</div>
-      <div class="bin-info-line"><strong>SCHEME:</strong> ${data.scheme}</div>
-      <div class="bin-info-line"><strong>TYPE:</strong> ${data.type}</div>
-      <div class="bin-info-line"><strong>BANK:</strong> ${data.bank}</div>
-      <div class="bin-info-line"><strong>COUNTRY:</strong> 
-        <span class="flag-emoji">${countryToFlag(data.country_code)}</span>
-        ${data.country} (${data.country_code})
-      </div>
-      <div class="bin-info-line"><strong>CURRENCY:</strong> ${data.currency}</div>
-    </div>
-    <div class="text-center mt-3">
-      <small class="text-muted">Join: https://t.me/bro_bin_lagbe</small>
-    </div>
-  `;
+  return `•──────────────────────•
+BIN: ${data.bin}
+SCHEME: ${data.scheme}
+TYPE: ${data.type}
+TIER: ${data.tier}
+PREPAID: ${data.prepaid || 'N/A'}
+BANK: ${data.bank}
+COUNTRY: ${data.country} (${data.country_code}) ${data.flag}
+CURRENCY: ${data.currency}
+•──────────────────────•
+
+Join: https://t.me/bro_bin_lagbe`;
 }
 </script>
 </body>
