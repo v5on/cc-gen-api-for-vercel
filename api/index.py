@@ -251,9 +251,9 @@ def root():
         ]))
     ])
     
-    json_string = json.dumps(response_data, indent=2) # indent for pretty printing
+    json_string = json.dumps(response_data, indent=2, ensure_ascii=False) # <--- UPDATED LINE
     response = make_response(json_string)
-    response.headers['Content-Type'] = 'application/json'
+    response.headers['Content-Type'] = 'application/json; charset=utf-8' # <--- UPDATED LINE
     return response
 
 @app.route("/generate", methods=["GET"])
@@ -327,9 +327,9 @@ def generate_cards():
         ("generated_at", datetime.utcnow().isoformat())
     ])
 
-    json_string = json.dumps(response_data, indent=2)
+    json_string = json.dumps(response_data, indent=2, ensure_ascii=False) 
     response = make_response(json_string)
-    response.headers['Content-Type'] = 'application/json'
+    response.headers['Content-Type'] = 'application/json; charset=utf-8' 
     return response
 
 @app.route("/generate/view", methods=["GET"])
@@ -418,9 +418,9 @@ def bin_lookup(bin):
         ("currency", bin_info.get("currency"))
     ])
 
-    json_string = json.dumps(response_data, indent=2)
+    json_string = json.dumps(response_data, indent=2, ensure_ascii=False) 
     response = make_response(json_string)
-    response.headers['Content-Type'] = 'application/json'
+    response.headers['Content-Type'] = 'application/json; charset=utf-8' 
     return response
 
 @app.route("/health", methods=["GET"])
