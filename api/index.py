@@ -4,10 +4,11 @@ import requests
 from pycountry import countries
 from countryinfo import CountryInfo
 from datetime import datetime, timedelta
-from flask import Flask, jsonify, request, make_response, Response # Added Response
+from flask import Flask, jsonify, request, make_response, Response 
 from werkzeug.exceptions import BadRequest, NotFound
-from collections import OrderedDict # New import
-import json # New import
+from collections import OrderedDict 
+from flask import render_template
+import json 
 
 app = Flask(__name__)
 
@@ -240,8 +241,9 @@ def get_flag_emoji(country_code: str) -> str:
         return "🏳️"
 
 # Routes
-@app.route("/", methods=["GET", "HEAD"])
-def root():
+@app.route("/", methods=["GET"])
+def home():
+    return render_template("index.html")
     response_data = OrderedDict([
         ("message", "Public CC Generator API"),
         ("endpoints", OrderedDict([
