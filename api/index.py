@@ -4,8 +4,10 @@ import requests
 from pycountry import countries
 from countryinfo import CountryInfo
 from datetime import datetime, timedelta
-from flask import Flask, jsonify, request, make_response
+from flask import Flask, jsonify, request, make_response, Response # Added Response
 from werkzeug.exceptions import BadRequest, NotFound
+from collections import OrderedDict # New import
+import json # New import
 
 app = Flask(__name__)
 
@@ -240,14 +242,19 @@ def get_flag_emoji(country_code: str) -> str:
 # Routes
 @app.route("/", methods=["GET", "HEAD"])
 def root():
-    return jsonify({
-        "message": "Public CC Generator API",
-        "endpoints": {
-            "/generate?bin=[bin]&limit=[ammount]&month=[MM]&year=[YY]&cvv=[cvv]": "Generate CCs (JSON)",
-            "/generate/view?bin=[bin]&limit=[ammount]&month=[MM]&year=[YY]&cvv=[cvv]": "Download CCs as file",
-            "/bin/[6 digit bin]": "Get BIN info"
-        }
-    })
+    response_data = OrderedDict([
+        ("message", "Public CC Generator API"),
+        ("endpoints", OrderedDict([
+            ("/generate?bin=[bin]&limit=[ammount]&month=[MM]&year=[YY]&cvv=[cvv]", "Generate CCs (JSON)"),
+            ("/generate/view?bin=[bin]&limit=[ammount]&month=[MM]&year=[YY]&cvv=[cvv]", "Download CCs as file"),
+            ("/bin/[bin in 6 digit]", "Get BIN info")
+        ]))
+    ])
+    
+    json_string = json.dumps(response_data, indent=2) # indent for pretty printing
+    response = make_response(json_string)
+    response.headers['Content-Type'] = 'application/json'
+    return response
 
 @app.route("/generate", methods=["GET"])
 def generate_cards():
@@ -295,30 +302,35 @@ def generate_cards():
         clean_bin = re.sub(r'[^\d]', '', bin)
         full_card_input = is_full_card_number(clean_bin)
         card_number = clean_bin if full_card_input else generate_card_number(clean_bin)
-        
-        cards.append({
-            "number": card_number,
-            "expiry": f"{expiry_month.zfill(2)}|20{expiry_year}",
-            "cvv": card_cvv,
-            "brand": bin_info.get("scheme"),
-            "type": bin_info.get("type")
-        })
+            
+        cards.append(OrderedDict([
+            ("number", card_number),
+            ("expiry", f"{expiry_month.zfill(2)}|20{expiry_year}"),
+            ("cvv", card_cvv),
+            ("brand", bin_info.get("scheme")),
+            ("type", bin_info.get("type"))
+        ]))
 
-    return jsonify({
-        "cards": cards,
-        "bin_info": {
-            "bin": bin[:6],
-            "bank": bin_info.get("bank"),
-            "country": bin_info.get("country"),
-            "country_code": bin_info.get("country_code"),
-            "flag": bin_info.get("flag"),
-            "scheme": bin_info.get("scheme"),
-            "type": bin_info.get("type"),
-            "tier": bin_info.get("tier"),
-            "currency": bin_info.get("currency")
-        },
-        "generated_at": datetime.utcnow().isoformat()
-    })
+    response_data = OrderedDict([
+        ("cards", cards),
+        ("bin_info", OrderedDict([
+            ("bin", bin[:6]),
+            ("bank", bin_info.get("bank")),
+            ("country", bin_info.get("country")),
+            ("country_code", bin_info.get("country_code")),
+            ("flag", bin_info.get("flag")),
+            ("scheme", bin_info.get("scheme")),
+            ("type", bin_info.get("type")),
+            ("tier", bin_info.get("tier")),
+            ("currency", bin_info.get("currency"))
+        ])),
+        ("generated_at", datetime.utcnow().isoformat())
+    ])
+
+    json_string = json.dumps(response_data, indent=2)
+    response = make_response(json_string)
+    response.headers['Content-Type'] = 'application/json'
+    return response
 
 @app.route("/generate/view", methods=["GET"])
 def generate_view():
@@ -388,23 +400,28 @@ def generate_view():
     response.headers['Content-Type'] = "text/plain; charset=utf-8"
     return response
 
-@app.route("/bin/<bin>", methods=["GET"])
+@app.route("/bin/[bin]", methods=["GET"])
 def bin_lookup(bin):
     bin_info = get_bin_info(bin)
     if not bin_info:
         raise NotFound("BIN not found in any source")
 
-    return jsonify({
-        "bin": bin[:6],
-        "bank": bin_info.get("bank"),
-        "country": bin_info.get("country"),
-        "country_code": bin_info.get("country_code"),
-        "flag": bin_info.get("flag"),
-        "scheme": bin_info.get("scheme"),
-        "type": bin_info.get("type"),
-        "tier": bin_info.get("tier"),
-        "currency": bin_info.get("currency")
-    })
+    response_data = OrderedDict([
+        ("bin", bin[:6]),
+        ("bank", bin_info.get("bank")),
+        ("country", bin_info.get("country")),
+        ("country_code", bin_info.get("country_code")),
+        ("flag", bin_info.get("flag")),
+        ("scheme", bin_info.get("scheme")),
+        ("type", bin_info.get("type")),
+        ("tier", bin_info.get("tier")),
+        ("currency", bin_info.get("currency"))
+    ])
+
+    json_string = json.dumps(response_data, indent=2)
+    response = make_response(json_string)
+    response.headers['Content-Type'] = 'application/json'
+    return response
 
 @app.route("/health", methods=["GET"])
 def health_check():
