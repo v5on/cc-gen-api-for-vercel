@@ -11,32 +11,44 @@
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --primary-color: #00C4B4;
+      --secondary-color: #F0B90B;
+      --dark-color: #1a1a1a;
+      --light-color: #f8f9fa;
+    }
+    
     body {
       font-family: 'Inter', sans-serif;
       background: linear-gradient(-45deg, #f8f9fa, #e9ecef, #f1f3f5, #ffffff);
       background-size: 400% 400%;
       animation: gradient 15s ease infinite;
-      color: #1a1a1a;
+      color: var(--dark-color);
     }
+    
     @keyframes gradient {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
+    
     .navbar {
       background: #fff;
       padding: 1rem 0;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       border-radius: 0 0 16px 16px;
     }
+    
     .navbar-brand img {
       height: 32px;
       margin-right: 10px;
     }
+    
     .nav-link:hover {
       background: rgba(0, 196, 180, 0.1);
-      color: #00C4B4 !important;
+      color: var(--primary-color) !important;
     }
+    
     .hero {
       background: #fff;
       padding: 4rem 0;
@@ -44,49 +56,135 @@
       margin: 1.5rem 0;
       box-shadow: 0 4px 12px rgba(0,0,0,0.08);
       text-align: center;
+      background: linear-gradient(135deg, rgba(240,185,11,0.05) 0%, rgba(0,196,180,0.05) 100%);
     }
+    
     .status-indicator {
       width: 12px;
       height: 12px;
       border-radius: 50%;
       display: inline-block;
     }
+    
     .status-online { background-color: #28a745; }
     .status-offline { background-color: #dc3545; }
+    
     pre {
       background: #f8f9fa;
       border: 1px solid #ddd;
       padding: 1rem;
       border-radius: 12px;
+      font-family: 'Courier New', monospace;
     }
-            .docs-section {
-            background: #ffffff;
-            padding: 2.5rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        }
-        .docs-section h3 {
-            color: #F0B90B;
-            font-weight: 600;
-            background: #F0B90B;
-            color: #ffffff;
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-        }
-        .docs-section pre {
-            background: #f1f3f5;
-            padding: 1.5rem;
-            border-radius: 12px;
-            font-size: 0.9rem;
-            border: 1px solid #e0e0e0;
-        }
-        .docs-section .docs-content {
-            background: #f8f9fa;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-        }
+    
+    .docs-section {
+      background: #ffffff;
+      padding: 2.5rem;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+      margin-bottom: 2rem;
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+    
+    .docs-section h3 {
+      font-weight: 600;
+      background: var(--secondary-color);
+      color: #ffffff;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+    }
+    
+    .docs-section pre {
+      background: #f1f3f5;
+      padding: 1.5rem;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      border: 1px solid #e0e0e0;
+      overflow-x: auto;
+    }
+    
+    .docs-section .docs-content {
+      background: #f8f9fa;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    }
+    
+    .api-container {
+      background: white;
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+    
+    .btn-primary {
+      background-color: var(--primary-color);
+      border-color: var(--primary-color);
+    }
+    
+    .btn-primary:hover {
+      background-color: #00a396;
+      border-color: #00a396;
+    }
+    
+    .btn-outline-primary {
+      color: var(--primary-color);
+      border-color: var(--primary-color);
+    }
+    
+    .btn-outline-primary:hover {
+      background-color: var(--primary-color);
+      border-color: var(--primary-color);
+    }
+    
+    .btn-success {
+      background-color: var(--secondary-color);
+      border-color: var(--secondary-color);
+    }
+    
+    .btn-success:hover {
+      background-color: #d9a70b;
+      border-color: #d9a70b;
+    }
+    
+    .bin-result {
+      background: #f8f9fa;
+      border-radius: 12px;
+      padding: 1.5rem;
+      font-family: 'Courier New', monospace;
+      white-space: pre-wrap;
+      border: 1px solid #e9ecef;
+    }
+    
+    .card-result {
+      position: relative;
+    }
+    
+    .copy-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 10;
+    }
+    
+    .highlight {
+      background-color: rgba(240, 185, 11, 0.2);
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+    
+    @media (max-width: 768px) {
+      .hero {
+        padding: 2rem 0;
+      }
+      
+      .docs-section {
+        padding: 1.5rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -114,105 +212,118 @@
 </section>
 
 <!-- API Generator -->
-<section class="py-5">
-  <div class="container">
+<div class="container">
+  <div class="api-container">
     <h2 class="mb-4 text-center">Generate Cards</h2>
     <form id="apiTestForm" class="row g-3">
-      <div class="col-md-4"><input type="text" class="form-control" placeholder="BIN (6-16 digits)" id="test-bin" required></div>
-      <div class="col-md-2"><input type="number" class="form-control" placeholder="Limit" id="test-limit" min="1" max="500"></div>
-      <div class="col-md-2"><input type="text" class="form-control" placeholder="Month (MM)" id="test-month"></div>
-      <div class="col-md-2"><input type="text" class="form-control" placeholder="Year (YY or YYYY)" id="test-year"></div>
-      <div class="col-md-2"><input type="text" class="form-control" placeholder="CVV (optional)" id="test-cvv"></div>
+      <div class="col-md-4">
+        <input type="text" class="form-control" placeholder="BIN (6-16 digits)" id="test-bin" required>
+      </div>
+      <div class="col-md-2">
+        <input type="number" class="form-control" placeholder="Limit" id="test-limit" min="1" max="500" value="10">
+      </div>
+      <div class="col-md-2">
+        <input type="text" class="form-control" placeholder="Month (MM)" id="test-month">
+      </div>
+      <div class="col-md-2">
+        <input type="text" class="form-control" placeholder="Year (YY or YYYY)" id="test-year">
+      </div>
+      <div class="col-md-2">
+        <input type="text" class="form-control" placeholder="CVV (optional)" id="test-cvv">
+      </div>
       <div class="col-12 text-center">
-        <button type="submit" class="btn btn-primary">Generate Cards</button>
+        <button type="submit" class="btn btn-primary px-4">Generate Cards</button>
       </div>
     </form>
 
-    <div id="apiResult" class="mt-4">
+    <div id="apiResult" class="mt-4 card-result">
       <div class="d-flex justify-content-between align-items-center mb-2">
         <h5>Generated Cards</h5>
-        <button class="btn btn-outline-primary btn-sm" onclick="copyCards()">Copy All</button>
+        <button class="btn btn-outline-primary btn-sm copy-btn" onclick="copyCards()">
+          <i class="fas fa-copy"></i> Copy Cards
+        </button>
       </div>
       <pre id="apiResultContent" style="max-height: 400px; overflow-y: auto;"></pre>
     </div>
   </div>
-</section>
+</div>
 
 <!-- BIN Info Lookup -->
-<section class="py-5 bg-light">
-  <div class="container">
+<div class="container">
+  <div class="api-container">
     <h2 class="mb-4 text-center">BIN Info Lookup</h2>
     <form id="binLookupForm" class="row g-3 mb-4 justify-content-center">
       <div class="col-md-6">
         <input type="text" class="form-control" placeholder="Enter BIN (6 digits)" id="bin-input" required>
       </div>
       <div class="col-md-2 text-center">
-        <button type="submit" class="btn btn-success w-100">Lookup</button>
+        <button type="submit" class="btn btn-success w-100">
+          <i class="fas fa-search"></i> Lookup
+        </button>
       </div>
     </form>
-    <div id="binResultBox" class="bg-white p-4 rounded shadow-sm" style="white-space: pre-wrap; font-family: monospace;"></div>
+    <div id="binResultBox" class="bin-result"></div>
   </div>
-</section>
-  
-  
-  <!-- Documentation Section -->
-    <section id="docs" class="py-5">
-        <div class="container">
-            <h2 class="mb-4 text-center" style="font-weight: 600; color: #1a1a1a;">API Documentation</h2>
-            <div class="card docs-section">
-                <div class="docs-content">
-                    <h3>GET /gen</h3>
-                    <p><strong>Description:</strong> Generates test credit card numbers based on the provided BIN, with optional expiry date and CVV.</p>
-                    <p><strong>Use Case:</strong> Create valid test credit card numbers for development and testing purposes, supporting both AMEX and non-AMEX cards.</p>
-                    <p><strong>Parameters:</strong></p>
-                    <table class="table table-bordered" style="background: #f8f9fa; border-radius: 12px;">
-                        <thead>
-                            <tr style="background: #F0B90B; color: #ffffff;">
-                                <th>Parameter</th>
-                                <th>Type</th>
-                                <th>Description</th>
-                                <th>Default</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><code>bin</code></td>
-                                <td>String</td>
-                                <td>Card BIN (6-15 digits or up to 16 with 'x')</td>
-                                <td>Required</td>
-                            </tr>
-                            <tr>
-                                <td><code>month</code></td>
-                                <td>String</td>
-                                <td>Expiry month (MM, e.g., 06)</td>
-                                <td>Random</td>
-                            </tr>
-                            <tr>
-                                <td><code>year</code></td>
-                                <td>String</td>
-                                <td>Expiry year (YYYY or YY, e.g., 2027)</td>
-                                <td>Random</td>
-                            </tr>
-                            <tr>
-                                <td><code>cvv</code></td>
-                                <td>String</td>
-                                <td>CVV (3 or 4 digits)</td>
-                                <td>Random</td>
-                            </tr>
-                            <tr>
-                                <td><code>amount</code></td>
-                                <td>Integer</td>
-                                <td>Number of cards to generate (1-2000)</td>
-                                <td>10</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <p><strong>Example Requests:</strong></p>
-                    <pre>GET /generate?bin=515462&limit=2&month=12&year=28&cvv=000</pre>
-                    <pre>GET /generate?bin=515462&limit=2&month=12&year=28</pre>
-                    <pre>GET /generate?bin=515462&limit=2</pre>
-                    <p><strong>Example Response:</strong></p>
-                    <pre>
+</div>
+
+<!-- Documentation Section -->
+<div class="container">
+  <div class="docs-section">
+    <h2 class="mb-4 text-center" style="font-weight: 600; color: var(--dark-color);">API Documentation</h2>
+    
+    <div class="docs-content mb-5">
+      <h3>GET /gen</h3>
+      <p><strong>Description:</strong> Generates test credit card numbers based on the provided BIN, with optional expiry date and CVV.</p>
+      <p><strong>Use Case:</strong> Create valid test credit card numbers for development and testing purposes, supporting both AMEX and non-AMEX cards.</p>
+      <p><strong>Parameters:</strong></p>
+      <table class="table table-bordered" style="background: #f8f9fa; border-radius: 12px;">
+        <thead>
+          <tr style="background: var(--secondary-color); color: #ffffff;">
+            <th>Parameter</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Default</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>bin</code></td>
+            <td>String</td>
+            <td>Card BIN (6-15 digits or up to 16 with 'x')</td>
+            <td>Required</td>
+          </tr>
+          <tr>
+            <td><code>month</code></td>
+            <td>String</td>
+            <td>Expiry month (MM, e.g., 06)</td>
+            <td>Random</td>
+          </tr>
+          <tr>
+            <td><code>year</code></td>
+            <td>String</td>
+            <td>Expiry year (YYYY or YY, e.g., 2027)</td>
+            <td>Random</td>
+          </tr>
+          <tr>
+            <td><code>cvv</code></td>
+            <td>String</td>
+            <td>CVV (3 or 4 digits)</td>
+            <td>Random</td>
+          </tr>
+          <tr>
+            <td><code>amount</code></td>
+            <td>Integer</td>
+            <td>Number of cards to generate (1-2000)</td>
+            <td>10</td>
+          </tr>
+        </tbody>
+      </table>
+      <p><strong>Example Requests:</strong></p>
+      <pre>GET /generate?bin=515462&limit=2&month=12&year=28&cvv=000</pre>
+      <pre>GET /generate?bin=515462&limit=2&month=12&year=28</pre>
+      <pre>GET /generate?bin=515462&limit=2</pre>
+      <p><strong>Example Response:</strong></p>
+      <pre>
 {
   "cards": [
     {
@@ -235,35 +346,71 @@
     "currency": "USD"
   },
   "generated_at": "2025-07-22T16:42:57.082067"
-}
-                    </pre>
-                    <p><strong>Response Fields:</strong></p>
-                    <ul>
-                        <li><code>status</code>: Indicates success or error</li>
-                        <li><code>bin</code>: Input BIN</li>
-                        <li><code>amount</code>: Number of cards generated</li>
-                        <li><code>cards</code>: Array of generated cards (card_number|month|year|cvv)</li>
-                        <li><code>Bank</code>: Issuing bank name</li>
-                        <li><code>Country</code>: Issuing country with flag</li>
-                        <li><code>BIN Info</code>: Card scheme and type</li>
-                        <li><code>api_owner</code>: Developer handle</li>
-                        <li><code>api_updates</code>: Updates channel</li>
-                    </ul>
-                    <p><strong>Notes:</strong></p>
-                    <ul>
-                        <li>BIN can include 'x' for random digits or full numbers.</li>
-                        <li>AMEX cards have 15 digits and 4-digit CVV; others have 16 digits and 3-digit CVV.</li>
-                        <li>Expiry date can be provided as MM/YYYY or MM/YY.</li>
-                        <li>Invalid inputs return a 400 error with a descriptive message.</li>
-                        <li>Contact @bro_bin_lagbe for API access and usage details.</li>
-                    </ul>
-                </div>
-                <p class="mt-4">
-                    Developed with ❤️ By @bro_bin_lagbe
-                </p>
-            </div>
-        </div>
-    </section>
+}</pre>
+    </div>
+    
+    <div class="docs-content">
+      <h3>GET /bin/{bin}</h3>
+      <p><strong>Description:</strong> Retrieves detailed information about a specific Bank Identification Number (BIN).</p>
+      <p><strong>Use Case:</strong> Verify card issuer details, country of origin, card type, and other metadata for any 6-digit BIN.</p>
+      <p><strong>Parameters:</strong></p>
+      <table class="table table-bordered" style="background: #f8f9fa; border-radius: 12px;">
+        <thead>
+          <tr style="background: var(--secondary-color); color: #ffffff;">
+            <th>Parameter</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Location</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>bin</code></td>
+            <td>String</td>
+            <td>6-digit Bank Identification Number</td>
+            <td>URL Path</td>
+          </tr>
+        </tbody>
+      </table>
+      <p><strong>Example Request:</strong></p>
+      <pre>GET /bin/515462</pre>
+      <p><strong>Example Response:</strong></p>
+      <pre>
+{
+  "bin": "515462",
+  "bank": "THE BANCORP BANK NATIONAL ASSOCIATION",
+  "country": "United States",
+  "country_code": "US",
+  "flag": "🇺🇸",
+  "scheme": "MASTERCARD",
+  "type": "DEBIT",
+  "tier": "PREPAID MASTERCARD GIFT CARD",
+  "currency": "USD"
+}</pre>
+      <p><strong>Response Fields:</strong></p>
+      <ul>
+        <li><code>bin</code>: The BIN number queried</li>
+        <li><code>bank</code>: Issuing bank name</li>
+        <li><code>country</code>: Country of issuance</li>
+        <li><code>country_code</code>: 2-letter country code</li>
+        <li><code>flag</code>: Country flag emoji</li>
+        <li><code>scheme</code>: Card network (VISA, MASTERCARD, etc.)</li>
+        <li><code>type</code>: Card type (DEBIT, CREDIT, etc.)</li>
+        <li><code>tier</code>: Card tier/classification</li>
+        <li><code>currency</code>: Default currency for the card</li>
+      </ul>
+    </div>
+    
+    <div class="mt-4 p-4 text-center" style="background: rgba(240, 185, 11, 0.1); border-radius: 12px;">
+      <p class="mb-0">
+        <strong>Note:</strong> All generated cards are for testing purposes only. No real financial transactions can be performed with these numbers.
+      </p>
+      <p class="mt-3 mb-0">
+        Developed with ❤️ By <span class="highlight">@bro_bin_lagbe</span>
+      </p>
+    </div>
+  </div>
+</div>
 
 <!-- Footer -->
 <footer class="text-center py-4 bg-white border-top">
@@ -276,6 +423,7 @@
 
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 async function checkApiStatus() {
   const statusIndicator = document.getElementById('status-indicator');
@@ -285,7 +433,7 @@ async function checkApiStatus() {
     const response = await fetch('/health');
     if (response.ok) {
       statusIndicator.classList.add('status-online');
-      statusText.textContent = 'Alive';
+      statusText.textContent = 'Online';
     } else {
       statusIndicator.classList.add('status-offline');
       statusText.textContent = 'Offline';
@@ -301,13 +449,12 @@ window.onload = checkApiStatus;
 document.getElementById('apiTestForm').addEventListener('submit', async function (e) {
   e.preventDefault();
   const bin = document.getElementById('test-bin').value;
-  const limit = document.getElementById('test-limit').value;
+  const limit = document.getElementById('test-limit').value || 10;
   const month = document.getElementById('test-month').value;
   const year = document.getElementById('test-year').value;
   const cvv = document.getElementById('test-cvv').value;
 
-  let url = `/generate?bin=${encodeURIComponent(bin)}`;
-  if (limit) url += `&limit=${encodeURIComponent(limit)}`;
+  let url = `/generate?bin=${encodeURIComponent(bin)}&limit=${encodeURIComponent(limit)}`;
   if (month) url += `&month=${encodeURIComponent(month)}`;
   if (year) url += `&year=${encodeURIComponent(year)}`;
   if (cvv) url += `&cvv=${encodeURIComponent(cvv)}`;
@@ -317,47 +464,63 @@ document.getElementById('apiTestForm').addEventListener('submit', async function
     const data = await res.json();
     document.getElementById('apiResultContent').textContent = formatGeneratedCards(data);
   } catch (err) {
-    document.getElementById('apiResultContent').textContent = 'Error fetching API response.';
+    document.getElementById('apiResultContent').textContent = 'Error fetching API response: ' + err.message;
   }
 });
 
 function formatGeneratedCards(data) {
   if (!data || !data.cards) return 'No cards generated.';
-
-  const info = data.bin_info;
-  const meta = [
-    `BIN: ${info.bin}`,
-    `SCHEME: ${info.scheme}`,
-    `TYPE: ${info.type}`,
-    `TIER: ${info.tier}`,
-    `PREPAID: ${info.prepaid}`,
-    `BANK: ${info.bank}`,
-    `COUNTRY: ${info.country} (${info.country_code}) ${info.flag}`,
-    `CURRENCY: ${info.currency}`,
-    `==============================`
-  ];
-
-  const cards = data.cards.map(c => `${c.number}|${c.expiry}|${c.cvv}`);
-  return [...meta, ...cards].join('\n');
+  
+  // Only include the card numbers and details (skip BIN info)
+  return data.cards.map(c => `${c.number}|${c.expiry}|${c.cvv}`).join('\n');
 }
 
 function copyCards() {
   const text = document.getElementById("apiResultContent").textContent;
   navigator.clipboard.writeText(text).then(() => {
-    alert("Cards copied to clipboard!");
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: 'Cards copied!',
+      showConfirmButton: false,
+      timer: 1500
+    });
+  }).catch(err => {
+    Swal.fire({
+      icon: 'error',
+      title: 'Failed to copy',
+      text: err.message
+    });
   });
 }
 
 document.getElementById('binLookupForm').addEventListener('submit', async function (e) {
   e.preventDefault();
-  const bin = document.getElementById('bin-input').value;
+  const bin = document.getElementById('bin-input').value.trim();
+  
+  if (bin.length < 6) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Invalid BIN',
+      text: 'BIN must be at least 6 digits'
+    });
+    return;
+  }
 
   try {
     const res = await fetch(`/bin/${bin}`);
+    if (!res.ok) {
+      throw new Error(await res.text());
+    }
     const data = await res.json();
     document.getElementById('binResultBox').textContent = formatBinInfo(data);
-  } catch {
-    document.getElementById('binResultBox').textContent = 'Error fetching BIN info.';
+  } catch (err) {
+    document.getElementById('binResultBox').textContent = 'Error: ' + err.message;
+    Swal.fire({
+      icon: 'error',
+      title: 'Lookup Failed',
+      text: err.message
+    });
   }
 });
 
@@ -367,13 +530,13 @@ BIN: ${data.bin}
 SCHEME: ${data.scheme}
 TYPE: ${data.type}
 TIER: ${data.tier}
-PREPAID: ${data.prepaid}
+PREPAID: ${data.prepaid || 'N/A'}
 BANK: ${data.bank}
 COUNTRY: ${data.country} (${data.country_code}) ${data.flag}
 CURRENCY: ${data.currency}
 •──────────────────────•
 
-join: https://t.me/bro_bin_lagbe`;
+Join: https://t.me/bro_bin_lagbe`;
 }
 </script>
 </body>
