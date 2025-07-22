@@ -1,20 +1,21 @@
 import re
+import json 
 import random
 import requests
 from pycountry import countries
+from flask import render_template
 from countryinfo import CountryInfo
 from datetime import datetime, timedelta
 from flask import Flask, jsonify, request, make_response, Response 
 from werkzeug.exceptions import BadRequest, NotFound
 from collections import OrderedDict 
-from flask import render_template
-import json 
+
 
 app = Flask(__name__)
 
 # Configuration
 MAX_GEN_LIMIT = 500  # Maximum cards per request
-DEFAULT_GEN_LIMIT = 5  # Default cards if limit not specified
+DEFAULT_GEN_LIMIT = 1  # Default cards if limit not specified
 
 # CORS Configuration
 @app.after_request
