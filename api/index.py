@@ -243,8 +243,8 @@ def root():
     return jsonify({
         "message": "Public CC Generator API",
         "endpoints": {
-            "/generate?bin=[bin]": "Generate CCs (JSON)",
-            "/generate/view": "Download CCs as file",
+            "/generate?bin=[bin]&limit=[ammount]&month=[MM]&year=[YY]&cvv=[cvv]": "Generate CCs (JSON)",
+            "/generate/view?bin=[bin]&limit=[ammount]&month=[MM]&year=[YY]&cvv=[cvv]": "Download CCs as file",
             "/bin/<bin>": "Get BIN info"
         }
     })
